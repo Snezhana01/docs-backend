@@ -1,0 +1,6 @@
+export enum FileValidationErrors {
+  UNSUPPORTED_FILE_TYPE = 'upload.UNSUPPORTED_FILE_TYPE',
+  TOO_MANY_FILES = 'upload.TOO_MANY_FILES',
+  FILES_REQUIRED = 'upload.FILES_REQUIRED',
+  FILES_TOO_LARGE = 'upload.FILES_TOO_LARGE',
+}
