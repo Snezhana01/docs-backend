@@ -6,12 +6,12 @@ import { AuthUser } from '../../decorators/auth-user.decorator';
 import { Auth } from '../../decorators/http.decorators';
 import { UserDto } from './dtos/user.dto';
 import { UserEntity } from './user.entity';
-import { UserService } from './user.service';
+import { UsersService } from './users.service';
 
 @ApiTags('Пользователи')
-@Controller('user')
-export class UserController {
-  constructor(private userService: UserService) {}
+@Controller('users')
+export class UsersController {
+  constructor(private userService: UsersService) {}
 
   @Get('me')
   @ApiOkResponse({ type: UserDto })

@@ -1,6 +1,14 @@
 import { DefaultEntity } from '@common/default/default.entity';
-import { UserEntity } from '@modules/user/user.entity';
-import { Column, Entity, JoinColumn, ManyToOne, Relation } from 'typeorm';
+import { UploadEntity } from '@modules/upload/upload.entity';
+import { UserEntity } from '@modules/users/user.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  Relation,
+} from 'typeorm';
 
 @Entity({ name: 'books' })
 export class BookEntity extends DefaultEntity {
@@ -22,4 +30,7 @@ export class BookEntity extends DefaultEntity {
   @ManyToOne(() => UserEntity)
   @JoinColumn()
   readonly user: Relation<UserEntity>;
+
+  @OneToOne(() => UploadEntity, (entity) => entity.book)
+  readonly cover: Relation<UploadEntity>;
 }

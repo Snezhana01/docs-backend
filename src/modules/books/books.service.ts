@@ -1,7 +1,7 @@
 import { DefaultService } from '@common/default/default.service';
 import type { DefaultPaginationFilter } from '@common/pagination';
 import { PaginationDto } from '@common/pagination';
-import type { UserEntity } from '@modules/user/user.entity';
+import type { UserEntity } from '@modules/users/user.entity';
 import { Injectable } from '@nestjs/common';
 
 import type { BookEntity } from './book.entity';
@@ -42,6 +42,17 @@ export class BooksService extends DefaultService<BookEntity> {
     });
 
     return new PaginationDto(books, total);
+  }
+
+  async getOne(id: string): Promise<BookDto> {
+    const book = await this.booksRepository.findOneOrException({
+      where: { id },
+      relations: {
+        cover: true,
+      },
+    });
+
+    return new BookDto(book);
   }
 
   async update(id: string, payload: UpdateBookDto): Promise<BookDto> {

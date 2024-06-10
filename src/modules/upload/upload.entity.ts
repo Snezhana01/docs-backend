@@ -1,4 +1,6 @@
-import { Column, Entity, Index } from 'typeorm';
+import { BookEntity } from '@modules/books/book.entity';
+import { UserEntity } from '@modules/users/user.entity';
+import { Column, Entity, Index, JoinColumn, OneToOne, Relation } from 'typeorm';
 
 import type { IDefaultEntity } from '../../common/default/default.entity';
 import { DefaultEntity } from '../../common/default/default.entity';
@@ -32,6 +34,18 @@ export class UploadEntity extends DefaultEntity implements IUploadEntity {
   order: number;
 
   @Index()
-  @Column({ name: 'user_id', nullable: true })
-  userId: string;
+  @Column({ type: 'uuid', nullable: true })
+  readonly userId: string;
+
+  @OneToOne(() => UserEntity, (entity) => entity.avatar)
+  @JoinColumn()
+  readonly user: Relation<UserEntity>;
+
+  @Index()
+  @Column({ type: 'uuid', nullable: true })
+  readonly bookId: string;
+
+  @OneToOne(() => BookEntity, (entity) => entity.cover)
+  @JoinColumn()
+  readonly book: Relation<BookEntity>;
 }

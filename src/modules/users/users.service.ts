@@ -4,11 +4,11 @@ import type { FindOptionsWhere } from 'typeorm';
 import { DefaultService } from '../../common/default/default.service';
 import { UserDto } from './dtos/user.dto';
 import type { UserEntity } from './user.entity';
-import { UserRepository } from './user.repository';
+import { UsersRepository } from './users.repository';
 
 @Injectable()
-export class UserService extends DefaultService<UserEntity> {
-  constructor(private readonly userRepository: UserRepository) {
+export class UsersService extends DefaultService<UserEntity> {
+  constructor(private readonly userRepository: UsersRepository) {
     super(userRepository);
   }
 

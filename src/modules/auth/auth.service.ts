@@ -7,9 +7,9 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { compare, hashSync } from 'bcryptjs';
 
-import { UserDto } from '../user/dtos/user.dto';
-import type { UserEntity } from '../user/user.entity';
-import { UserRepository } from '../user/user.repository';
+import { UserDto } from '../users/dtos/user.dto';
+import type { UserEntity } from '../users/user.entity';
+import { UsersRepository } from '../users/users.repository';
 import type { AuthorizationDto } from './dtos/req/authorization.dto';
 import type { RegistrationDto } from './dtos/req/registration.dto';
 import type { TokenResponseDto } from './dtos/res/token-response.dto';
@@ -20,7 +20,7 @@ import type { IAuthPayload } from './interfaces/iauth-payload.interface';
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly userRepository: UserRepository,
+    private readonly userRepository: UsersRepository,
   ) {}
 
   async login(payload: AuthorizationDto): Promise<UserAuthResponseDto> {

@@ -12,7 +12,7 @@ import { ApiConfigService } from '../../shared/services/api-config.service';
 import { SharedModule } from '../../shared/shared.module';
 import { AuthModule } from '../auth/auth.module';
 import { UploadModule } from '../upload/upload.module';
-import { UserModule } from '../user/user.module';
+import { UsersModule } from '../users/users.module';
 import { AppController } from './app.controller';
 
 @Module({
@@ -31,7 +31,7 @@ import { AppController } from './app.controller';
     EventEmitterModule.forRoot(),
     SharedModule,
     AuthModule,
-    UserModule,
+    UsersModule,
     UploadModule,
     BooksModule,
   ],

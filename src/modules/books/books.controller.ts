@@ -1,5 +1,5 @@
 import { DefaultPaginationFilter, PaginationDto } from '@common/pagination';
-import { UserEntity } from '@modules/user/user.entity';
+import { UserEntity } from '@modules/users/user.entity';
 import { Body, Controller, Get, Patch, Post, Query } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { RoleType } from 'src/constants';
@@ -24,6 +24,13 @@ export class BooksController {
     @Query() filters: DefaultPaginationFilter,
   ): Promise<PaginationDto<BookDto>> {
     return this.booksService.getMany(user.id, filters);
+  }
+
+  @Get(':id')
+  @ApiOkResponse({ type: BookDto })
+  @Auth([RoleType.REDACTOR], 'Получить  книгу')
+  getOne(@UUIDParam('id') id: string): Promise<BookDto> {
+    return this.booksService.getOne(id);
   }
 
   @Post()

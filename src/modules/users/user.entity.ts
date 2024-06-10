@@ -1,5 +1,6 @@
 import { Nullable } from '@common/types';
-import { Column, Entity, Index } from 'typeorm';
+import { UploadEntity } from '@modules/upload/upload.entity';
+import { Column, Entity, Index, OneToOne, Relation } from 'typeorm';
 
 import { DefaultEntity } from '../../common/default/default.entity';
 import { RoleType } from '../../constants';
@@ -26,4 +27,7 @@ export class UserEntity extends DefaultEntity {
     default: RoleType.REDACTOR,
   })
   role: RoleType;
+
+  @OneToOne(() => UploadEntity, (entity) => entity.user)
+  readonly avatar: Relation<UploadEntity>;
 }

@@ -1,3 +1,4 @@
+import { ChaptersModule } from '@modules/chapters/chapters.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmExModule } from 'src/database/typeorm-ex.module';
 
@@ -6,7 +7,10 @@ import { BooksRepository } from './books.repository';
 import { BooksService } from './books.service';
 
 @Module({
-  imports: [TypeOrmExModule.forCustomRepository([BooksRepository])],
+  imports: [
+    TypeOrmExModule.forCustomRepository([BooksRepository]),
+    ChaptersModule,
+  ],
   controllers: [BooksController],
   providers: [BooksService],
 })
