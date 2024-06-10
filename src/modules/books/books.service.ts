@@ -1,6 +1,8 @@
 import { DefaultService } from '@common/default/default.service';
 import type { DefaultPaginationFilter } from '@common/pagination';
 import { PaginationDto } from '@common/pagination';
+import { UploadTypes } from '@modules/upload/constants/upload-types.enum';
+import { UploadService } from '@modules/upload/upload.service';
 import type { UserEntity } from '@modules/users/user.entity';
 import { Injectable } from '@nestjs/common';
 
@@ -12,7 +14,10 @@ import type { UpdateBookDto } from './dtos/req/update-book.dto';
 
 @Injectable()
 export class BooksService extends DefaultService<BookEntity> {
-  constructor(private readonly booksRepository: BooksRepository) {
+  constructor(
+    private readonly booksRepository: BooksRepository,
+    private readonly uploadService: UploadService,
+  ) {
     super(booksRepository);
   }
 
@@ -41,7 +46,10 @@ export class BooksService extends DefaultService<BookEntity> {
       order: { createdAt: order },
     });
 
-    return new PaginationDto(books, total);
+    return new PaginationDto(
+      books.map((entity) => new BookDto(entity)),
+      total,
+    );
   }
 
   async getOne(id: string): Promise<BookDto> {
@@ -63,6 +71,14 @@ export class BooksService extends DefaultService<BookEntity> {
     Object.assign(book, payload);
 
     await this.booksRepository.save(book);
+
+    if (payload.coverId) {
+      await this.uploadService.joinFilesWithEntity(
+        { bookId: id },
+        [payload.coverId],
+        UploadTypes.COVER,
+      );
+    }
 
     return new BookDto(book);
   }
